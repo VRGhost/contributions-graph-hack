@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "contributions-graph-hack"
+version = "0.0.0dev"
+description = ""
+authors = ["Ilja Orlovs <vrghost@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    {include = "le_hack", from = "src"}
+]
+
+[tool.poetry.scripts]
+
+hack = "le_hack.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+gitpython = "^3.1.44"
+ruff = "^0.8.6"
+typer = "^0.15.1"
+
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+lint.select = [
+    # https://beta.ruff.rs/docs/rules/
+    "A", # do not shadow bultins - TODO
+    "B",  # flake8-bugbear
+    "C",
+    "E",
+    "F",
+    "I",  # isort
+    "W",  # pycodestyle
+    "N",  # pep8 naming
+    "C4", # list comprehensions
+    "T20", # print()
+    "PTH",
+]
+lint.ignore = ["N802", "F841"]
+
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    # imported but unused
+    "F401",
+    # E402 Module level import not at top of file
+    "E402",
+]
+"alembic/**/*" = [
+    "E402",
+]
+
+
+[tool.ruff.lint.isort]
+order-by-type = true
+known-first-party = ["le_hack", ]
+forced-separate = ["tests"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
